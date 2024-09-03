@@ -1,6 +1,7 @@
 let appId = '348ed86e6e87ace7571afcc665b9b4c2';
 let units = 'metric';
 let searchMethod;
+
 function getSearchMethod(searchTerm){
     if(searchTerm.length === 5 && Number.parseInt(searchTerm) + '' === searchTerm){ // checking the total num and if every item in the searchTerm is a number
         searchMethod = 'zip';
@@ -15,8 +16,21 @@ function searchWeather(searchTerm){
     fetch(`https://api.openweathermap.org/data/2.5/weather?${searchMethod}=${searchTerm}&APPID=${appId}&units=${units}`).then(result=>{
         return result.json();
     }).then(result => {
-        init(result);
+        let errorCode = result.cod;
+        if (errorCode == "404"){
+            displayError(searchTerm)
+        }
+        else{
+            console.log(result)
+            init(result);
+        }
     })
+}
+
+function displayError(searchTerm){
+    let errorString = "No such city '" + searchTerm + "' found!";
+    alert(errorString);
+    document.getElementById('searchInput').value = "";
 }
 
 function init(resultFromServer){
@@ -48,6 +62,7 @@ function init(resultFromServer){
     let humidityElement = document.getElementById('humidity');
     let windSpeedElement = document.getElementById('windSpeed');
     let cityHeader = document.getElementById('cityHeader');
+    let countryCode = document.getElementById('countryCode');
     let weatherIcon = document.getElementById('documentIconImage');
 
     weatherIcon.src = 'https://openweathermap.org/img/wn/' + resultFromServer.weather[0].icon + '@2x.png';
@@ -58,6 +73,7 @@ function init(resultFromServer){
     temperatureElement.innerHTML = Math.floor(resultFromServer.main.temp) + '&#176';
     windSpeedElement.innerHTML = 'Winds at ' + Math.floor(resultFromServer.wind.speed) + 'm/s'; 
     cityHeader.innerHTML = resultFromServer.name;
+    countryCode.innerHTML = resultFromServer.sys.country;
     humidityElement.innerHTML = 'Humidity levels at ' + resultFromServer.main.humidity + '%';
 
     setPositionForWeatherInfo();    
