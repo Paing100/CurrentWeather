@@ -36,7 +36,9 @@ To run this weather app on your local machine, follow these steps:
 ## Future Enhancements
 - **Weather Forecast**: Add a 7-day weather forecast feature.
 - **Weather Alerts**: Provide severe weather alerts for selected cities.
-
+  
+## Acknowledgments
+- This project was created following a tutorial by [PortEXE](https://www.youtube.com/@PortEXE). You can check out the original tutorial [here](https://www.youtube.com/watch?v=ZPG2wGNj6J4&t=539s).
+- 
 ## License
-
 [MIT](https://choosealicense.com/licenses/mit/)
